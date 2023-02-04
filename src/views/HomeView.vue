@@ -8,28 +8,15 @@
 </template>
 <script>
 import PostList from '../components/PostList.vue'
-import { ref } from '@vue/reactivity';
+import getPosts from '../composables/getPosts'
+
 export default {
   name: 'HomeView',
   components: {
     PostList
   },
   setup() {
-
-    const posts = ref([])
-    const error = ref(null)
-
-    const load = async () => {
-      try {
-        let data = await fetch('http://localhost:3000/posts')
-        if (!data.ok) {
-          throw Error('No data available')
-        }
-        posts.value = await data.json()
-      } catch (err) {
-        error.value = err.message
-      }
-    }
+    const { posts, error, load } = getPosts()
 
     load()
 
