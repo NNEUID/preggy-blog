@@ -1,6 +1,10 @@
 <template>
   <h1>Home</h1>
-  <PostList :posts="posts" />
+  <div v-if="error">{{ error }}</div>
+  <div v-if="posts.length">
+    <PostList :posts="posts" />
+  </div>
+  <div v-else>Loading...</div>
 </template>
 <script>
 import PostList from '../components/PostList.vue'
@@ -13,8 +17,23 @@ export default {
   setup() {
 
     const posts = ref([])
+    const error = ref(null)
 
-    return { posts }
+    const load = async () => {
+      try {
+        let data = await fetch('http://localhost:3000/posts')
+        if (!data.ok) {
+          throw Error('No data available')
+        }
+        posts.value = await data.json()
+      } catch (err) {
+        error.value = err.message
+      }
+    }
+
+    load()
+
+    return { posts, error }
   }
 }
 </script>
