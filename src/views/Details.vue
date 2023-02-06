@@ -3,8 +3,17 @@
 </template>
 
 <script>
+import getPost from '@/composables/getPost';
 export default {
+  props: ['id'],
+  setup(props) {
+    const { post, error, load } = getPost(props.id)
+    load()
 
+    console.log(post)
+
+    return { post, error }
+  }
 }
 </script>
 
