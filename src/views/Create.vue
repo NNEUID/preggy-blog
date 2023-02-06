@@ -27,7 +27,7 @@ export default {
     const title = ref('')
     const body = ref('')
     const tag = ref('')
-    const tags = ref(['html'])
+    const tags = ref([''])
 
     const handleKeyDown = () => {
       if (!tags.value.includes(tag.value)) {
