@@ -1,6 +1,6 @@
 <template>
   <div class="create">
-    <form>
+    <form @submit="addPost">
 
       <label for="title">Title:</label>
       <input v-model="title" name="title" type="text" required>
@@ -37,7 +37,25 @@ export default {
       tag.value = ''
     }
 
-    return { title, body, tag, handleKeyDown, tags }
+    const addPost = async () => {
+      try {
+        const post = {
+          title: title.value,
+          body: body.value,
+          tags: tags.value
+        }
+        await fetch('http://localhost:3000/posts', {
+          method: 'POST',
+          body: JSON.stringify(post),
+          headers: { 'Content-Type': 'application/json' }
+        })
+        console.log('Posted');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    return { title, body, tag, handleKeyDown, tags, addPost }
   }
 }
 </script>

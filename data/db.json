@@ -19,6 +19,16 @@
         "webdev",
         "coding"
       ]
+    },
+    {
+      "title": "Preggy Launches it's App",
+      "body": "We're live. Go check us out on the app store, play store and learn more on our website. www.preggy.health",
+      "tags": [
+        "health",
+        "antenatalcare",
+        "preggies"
+      ],
+      "id": 3
     }
   ]
 }
