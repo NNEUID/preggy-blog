@@ -1,6 +1,6 @@
 <template>
   <div class="create">
-    <form @submit="addPost">
+    <form @submit.prevent="addPost">
 
       <label for="title">Title:</label>
       <input v-model="title" name="title" type="text" required>
@@ -22,12 +22,15 @@
 
 <script>
 import { ref } from '@vue/reactivity'
+import { useRouter } from 'vue-router'
 export default {
   setup() {
     const title = ref('')
     const body = ref('')
     const tag = ref('')
     const tags = ref([])
+
+    const router = useRouter()
 
     const handleKeyDown = () => {
       if (!tags.value.includes(tag.value)) {
@@ -49,7 +52,8 @@ export default {
           body: JSON.stringify(post),
           headers: { 'Content-Type': 'application/json' }
         })
-        console.log('Posted');
+
+        router.push({ name: 'home' })
       } catch (error) {
         console.log(error);
       }
