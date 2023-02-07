@@ -30,7 +30,7 @@ export default {
     load()
 
     const filteredPosts = computed(() => {
-      return posts.value.filter(post => post.tags.includes(tag))
+      return posts.value.filter(post => post.tags.includes(route.params.tag))
     })
 
     return { filteredPosts, error, tag }
