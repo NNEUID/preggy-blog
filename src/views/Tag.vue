@@ -2,7 +2,7 @@
   <div class="tag">
     <h1>#{{ tag }}</h1>
     <div v-if="error">{{ error }}</div>
-    <div v-if="filteredPosts.length">
+    <div v-if="filteredPosts.length" class="layout">
       <PostList :posts="filteredPosts" />
       <TagCloud :posts="filteredPosts" />
     </div>
