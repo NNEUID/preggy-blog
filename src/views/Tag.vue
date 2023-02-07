@@ -1,6 +1,6 @@
 <template>
   <div class="tag">
-    <h1>{{ tag }}</h1>
+    <h1>#{{ tag }}</h1>
     <div v-if="error">{{ error }}</div>
     <div v-if="filteredPosts.length">
       <PostList :posts="filteredPosts" />
