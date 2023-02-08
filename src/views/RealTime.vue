@@ -14,9 +14,11 @@ export default {
     const postsRef = collection(db, 'posts')
     const postsQuery = query(postsRef, orderBy('createdAt', 'desc'))
     const unsubscribe = onSnapshot(postsQuery, (querySnapshot) => {
+      let docs = []
       querySnapshot.forEach((doc) => {
-        posts.value.push({ id: doc.id, ...doc.data() })
+        docs.push({ id: doc.id, ...doc.data() })
       });
+      posts.value = docs
     })
 
 
