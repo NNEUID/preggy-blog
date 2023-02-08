@@ -1,6 +1,6 @@
 import { ref } from '@vue/reactivity';
 import { db } from '@/firebase/config';
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, query, orderBy } from 'firebase/firestore'
 
 const getPosts = () => {
   const posts = ref([])
@@ -8,7 +8,9 @@ const getPosts = () => {
 
   const load = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'posts'))
+      const postsRef = collection(db, 'posts')
+      const postsQuery = query(postsRef, orderBy('createdAt', 'desc'))
+      const querySnapshot = await getDocs(postsQuery)
       querySnapshot.forEach((doc) => {
         posts.value.push({ id: doc.id, ...doc.data() })
       })
