@@ -24,7 +24,7 @@
 import { ref } from '@vue/reactivity'
 import { useRouter } from 'vue-router'
 import { db } from '@/firebase/config';
-import { addDoc, collection } from '@firebase/firestore';
+import { addDoc, collection, Timestamp } from '@firebase/firestore';
 
 export default {
   setup() {
@@ -48,7 +48,8 @@ export default {
         const post = {
           title: title.value,
           body: body.value,
-          tags: tags.value
+          tags: tags.value,
+          createdAt: Timestamp.fromDate(new Date())
         }
         await addDoc(collection(db, 'posts'), post)
         // console.log("Document written with ID: ", docRef.id);
