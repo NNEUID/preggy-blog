@@ -11,11 +11,10 @@ const getPost = (id) => {
     try {
       const postRef = doc(db, "posts", id);
       const postSnap = await getDoc(postRef);
-      if (postSnap.exists) {
-        post.value = { id: id, ...postSnap.data() }
-      } else {
+      if (!postSnap.exists) {
         throw Error('No such post!')
       }
+      post.value = { id: postSnap.id, ...postSnap.data() }
     } catch (err) {
       error.value = err.message
     }
