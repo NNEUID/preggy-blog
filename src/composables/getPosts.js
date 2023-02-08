@@ -1,4 +1,6 @@
 import { ref } from '@vue/reactivity';
+import { db } from '@/firebase/config';
+import { collection, getDocs } from 'firebase/firestore'
 
 const getPosts = () => {
   const posts = ref([])
@@ -6,14 +8,10 @@ const getPosts = () => {
 
   const load = async () => {
     try {
-      // await new Promise(resolve => {
-      //   setTimeout(resolve, 2000)
-      // })
-      const data = await fetch('http://localhost:3000/posts')
-      if (!data.ok) {
-        throw Error('No data available')
-      }
-      posts.value = await data.json()
+      const querySnapshot = await getDocs(collection(db, 'posts'))
+      querySnapshot.forEach((doc) => {
+        posts.value.push({ id: doc.id, ...doc.data() })
+      })
     } catch (err) {
       error.value = err.message
     }
