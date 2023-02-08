@@ -23,6 +23,9 @@
 <script>
 import { ref } from '@vue/reactivity'
 import { useRouter } from 'vue-router'
+import { db } from '@/firebase/config';
+import { addDoc, collection } from '@firebase/firestore';
+
 export default {
   setup() {
     const title = ref('')
@@ -47,11 +50,8 @@ export default {
           body: body.value,
           tags: tags.value
         }
-        await fetch('http://localhost:3000/posts', {
-          method: 'POST',
-          body: JSON.stringify(post),
-          headers: { 'Content-Type': 'application/json' }
-        })
+        const docRef = await addDoc(collection(db, 'posts'), post)
+        console.log("Document written with ID: ", docRef.id);
 
         router.push({ name: 'home' })
       } catch (error) {
