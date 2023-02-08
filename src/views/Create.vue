@@ -50,8 +50,8 @@ export default {
           body: body.value,
           tags: tags.value
         }
-        const docRef = await addDoc(collection(db, 'posts'), post)
-        console.log("Document written with ID: ", docRef.id);
+        await addDoc(collection(db, 'posts'), post)
+        // console.log("Document written with ID: ", docRef.id);
 
         router.push({ name: 'home' })
       } catch (error) {

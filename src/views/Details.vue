@@ -3,7 +3,8 @@
   <div v-if="post" class="post">
     <h3>{{ post.title }}</h3>
     <p class="pre">{{ post.body }}</p>
-    <div v-for="tag in post.tags" :key="tag" class="pill">#{{ tag }}</div>
+    <button @click="handleClick">Delete Post</button>
+    <!-- <div v-for="tag in post.tags" :key="tag" class="pill">#{{ tag }}</div> -->
   </div>
   <div v-else>
     <Spinner />
@@ -13,7 +14,9 @@
 <script>
 import getPost from '@/composables/getPost';
 import Spinner from '../components/Spinner.vue'
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+import { db } from '@/firebase/config';
+import { deleteDoc, doc } from '@firebase/firestore';
 export default {
   props: ['id'],
   components: {
@@ -22,11 +25,21 @@ export default {
   setup(props) {
 
     const route = useRoute()
+    const router = useRouter()
 
     const { post, error, load } = getPost(route.params.id)
     load()
 
-    return { post, error }
+    const handleClick = async () => {
+      try {
+        await deleteDoc(doc(db, 'posts', props.id))
+        router.push({ name: 'home' })
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    return { post, error, handleClick }
   }
 }
 </script>
