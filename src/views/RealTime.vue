@@ -1,13 +1,17 @@
 <template>
   <h1>Real-time Data</h1>
-  <p v-if="posts.length">{{ posts[0].title }}</p>
+  <PostList :posts="posts" />
 </template>
 
 <script>
+import PostList from '@/components/PostList.vue';
 import { ref } from '@vue/reactivity'
 import { db } from '@/firebase/config';
 import { onSnapshot, query, collection, orderBy } from '@firebase/firestore';
 export default {
+  components: {
+    PostList
+  },
   setup() {
     const posts = ref([])
 
